@@ -104,8 +104,7 @@ monitor_t monitor2;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-
-void sdl_init(void)
+void sdl_init(window_event_cb_t window_event_cb)//osm
 {
     /*Initialize the SDL*/
     SDL_Init(SDL_INIT_VIDEO);
@@ -123,7 +122,7 @@ void sdl_init(void)
 
     SDL_StartTextInput();
 
-    lv_timer_create(sdl_event_handler, 10, NULL);
+    lv_timer_create(sdl_event_handler, 10, window_event_cb);
 }
 
 /**
@@ -264,6 +263,10 @@ static void sdl_event_handler(lv_timer_t * t)
         keyboard_handler(&event);
 
         if((&event)->type == SDL_WINDOWEVENT) {
+            if(t->user_data) {//osm
+                window_event_cb_t window_event_cb = (window_event_cb_t)(t->user_data);
+                window_event_cb(&(&event)->window);
+            }
             switch((&event)->window.event) {
 #if SDL_VERSION_ATLEAST(2, 0, 5)
                 case SDL_WINDOWEVENT_TAKE_FOCUS:

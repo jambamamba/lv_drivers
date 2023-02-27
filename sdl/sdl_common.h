@@ -49,12 +49,12 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 extern volatile bool sdl_quit_qry;
+typedef void (*window_event_cb_t)(struct SDL_WindowEvent *);//osm
 
 /**
  * Initialize SDL to be used as display, mouse and mouse wheel drivers.
  */
-void sdl_init(void);
-
+void sdl_init(window_event_cb_t window_event_cb);//osm
 /**
  * Flush a buffer to the marked area
  * @param drv pointer to driver where this function belongs

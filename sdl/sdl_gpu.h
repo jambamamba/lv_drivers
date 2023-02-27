@@ -46,7 +46,8 @@ extern "C" {
 /**
  * Initialize SDL to be used as display, mouse and mouse wheel drivers.
  */
-void sdl_init(void);
+typedef void (*window_event_cb_t)(struct SDL_WindowEvent *);//osm
+void sdl_init(window_event_cb_t window_event_cb);//osm
 
 void sdl_disp_drv_init(lv_disp_drv_t * disp_drv, lv_coord_t hor_res, lv_coord_t ver_res);
 

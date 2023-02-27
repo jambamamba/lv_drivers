@@ -46,7 +46,7 @@ extern "C" {
 /**
  * Initialize SDL to be used as display, mouse and mouse wheel drivers.
  */
-void sdl_init(void);
+void sdl_init(window_event_cb_t window_event_cb);//osm
 
 /**
  * Flush a buffer to the marked area
