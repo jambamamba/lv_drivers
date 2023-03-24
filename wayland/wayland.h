@@ -63,6 +63,8 @@ lv_indev_t * lv_wayland_get_touchscreen(lv_disp_t * disp);
 #ifdef LV_WAYLAND_TIMER_HANDLER
 uint32_t lv_wayland_timer_handler(void);
 #endif
+void lv_wayland_keyboard_read(lv_indev_drv_t *drv, lv_indev_data_t *data);//osm added
+void lv_wayland_touch_read(lv_indev_drv_t *drv, lv_indev_data_t *data);//osm added
 
 /**********************
  *      MACROS

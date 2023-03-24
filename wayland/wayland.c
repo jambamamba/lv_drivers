@@ -2220,6 +2220,13 @@ static void _lv_wayland_touch_read(lv_indev_drv_t *drv, lv_indev_data_t *data)
  *   GLOBAL FUNCTIONS
  **********************/
 
+void lv_wayland_keyboard_read(lv_indev_drv_t *drv, lv_indev_data_t *data){//osm added
+    _lv_wayland_keyboard_read(drv, data);
+}
+
+void lv_wayland_touch_read(lv_indev_drv_t *drv, lv_indev_data_t *data){//osm added
+    _lv_wayland_touch_read(drv, data);
+}
 /**
  * Initialize Wayland driver
  */
@@ -2681,5 +2688,7 @@ uint32_t lv_wayland_timer_handler(void)
 
     return time_till_next;
 }
+
 #endif
+
 #endif // USE_WAYLAND
