@@ -1157,8 +1157,8 @@ static void xdg_toplevel_handle_wm_capabilities(void *data, struct xdg_toplevel 
 static const struct xdg_toplevel_listener xdg_toplevel_listener = {
     .configure = xdg_toplevel_handle_configure,
     .close = xdg_toplevel_handle_close,
-    .configure_bounds = xdg_toplevel_handle_configure_bounds,
-    .wm_capabilities = xdg_toplevel_handle_wm_capabilities
+    .configure_bounds = xdg_toplevel_handle_configure_bounds
+    //,.wm_capabilities = xdg_toplevel_handle_wm_capabilities
 };
 
 static void xdg_wm_base_ping(void *data, struct xdg_wm_base *xdg_wm_base, uint32_t serial)
@@ -1175,6 +1175,8 @@ static void handle_global(void *data, struct wl_registry *registry,
                           uint32_t name, const char *interface, uint32_t version)
 {
     struct application *app = data;
+
+    LV_LOG("@@@ interface %s\n", interface);
 
     if (strcmp(interface, wl_compositor_interface.name) == 0)
     {
@@ -1199,6 +1201,7 @@ static void handle_global(void *data, struct wl_registry *registry,
     else if (strcmp(interface, wl_shell_interface.name) == 0)
     {
         app->wl_shell = wl_registry_bind(registry, name, &wl_shell_interface, 1);
+        LV_LOG("@@@ app->wl_shell %p\n", app->wl_shell);
     }
 #endif
 #if LV_WAYLAND_XDG_SHELL
@@ -2504,6 +2507,7 @@ lv_disp_t * lv_wayland_create_window(lv_coord_t hor_res, lv_coord_t ver_res, cha
         LV_LOG_ERROR("failed to register keyboard indev");
     }
 
+    LV_LOG("successfully created display window!");
     return window->lv_disp;
 }
 
