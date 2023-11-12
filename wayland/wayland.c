@@ -1157,8 +1157,8 @@ static void xdg_toplevel_handle_wm_capabilities(void *data, struct xdg_toplevel 
 static const struct xdg_toplevel_listener xdg_toplevel_listener = {
     .configure = xdg_toplevel_handle_configure,
     .close = xdg_toplevel_handle_close,
-    .configure_bounds = xdg_toplevel_handle_configure_bounds,
-    .wm_capabilities = xdg_toplevel_handle_wm_capabilities
+    .configure_bounds = xdg_toplevel_handle_configure_bounds/*,
+    .wm_capabilities = xdg_toplevel_handle_wm_capabilities*/
 };
 
 static void xdg_wm_base_ping(void *data, struct xdg_wm_base *xdg_wm_base, uint32_t serial)
@@ -1826,6 +1826,7 @@ static bool resize_window(struct window *window, int width, int height)
 
 static struct window *create_window(struct application *app, int width, int height, const char *title)
 {
+    printf("@@@@@@@@@@@@@@@@@@3.2 %s\n", __FILE__);
     struct window *window;
 
     window = _lv_ll_ins_tail(&app->window_ll);
@@ -1852,7 +1853,7 @@ static struct window *create_window(struct application *app, int width, int heig
     {
         // Needed for #if madness below
     }
-#if LV_WAYLAND_XDG_SHELL
+#if defined (LV_WAYLAND_XDG_SHELL)
     else if (app->xdg_wm)
     {
         window->xdg_surface = xdg_wm_base_get_xdg_surface(app->xdg_wm, window->body->surface);
@@ -1881,8 +1882,7 @@ static struct window *create_window(struct application *app, int width, int heig
         window->body->surface_configured = false;
         wl_surface_commit(window->body->surface);
     }
-#endif
-#if LV_WAYLAND_WL_SHELL
+#elif defined (LV_WAYLAND_WL_SHELL)
     else if (app->wl_shell)
     {
         window->wl_shell_surface = wl_shell_get_shell_surface(app->wl_shell, window->body->surface);
