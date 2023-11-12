@@ -1826,7 +1826,6 @@ static bool resize_window(struct window *window, int width, int height)
 
 static struct window *create_window(struct application *app, int width, int height, const char *title)
 {
-    printf("@@@@@@@@@@@@@@@@@@3.2 %s\n", __FILE__);
     struct window *window;
 
     window = _lv_ll_ins_tail(&app->window_ll);
@@ -2504,6 +2503,7 @@ lv_disp_t * lv_wayland_create_window(lv_coord_t hor_res, lv_coord_t ver_res, cha
         LV_LOG_ERROR("failed to register keyboard indev");
     }
 
+    LV_LOG("successfully created display window!");
     return window->lv_disp;
 }
 
