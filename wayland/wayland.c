@@ -1527,6 +1527,9 @@ static void destroy_graphic_obj(struct graphic_object * obj)
 static bool attach_decoration(struct window *window, struct graphic_object * decoration,
                               smm_buffer_t *decoration_buffer, struct graphic_object * parent)
 {
+#ifndef LV_WAYLAND_CLIENT_SIDE_DECORATIONS
+    return true;
+#else
     struct wl_buffer *wl_buf = SMM_BUFFER_PROPERTIES(decoration_buffer)->tag[TAG_LOCAL];
 
     int pos_x, pos_y;
@@ -1595,6 +1598,7 @@ err_destroy_surface:
     decoration->surface = NULL;
 
     return false;
+#endif//LV_WAYLAND_CLIENT_SIDE_DECORATIONS    
 }
 
 #if LV_WAYLAND_CLIENT_SIDE_DECORATIONS
@@ -2185,7 +2189,9 @@ static void _lv_wayland_handle_output(void)
         {
             if (errno != EAGAIN)
             {
-                LV_LOG_ERROR("failed to flush wayland display");
+                LV_LOG_ERROR("failed to flush wayland display, application.display: %i:%s", 
+                    errno,
+                    strerror(errno));
             }
         }
         else
